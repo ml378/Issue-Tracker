@@ -13,6 +13,7 @@ class Issue:
         self.labels = labels or []
 
     def __repr__(self):
+        """Returns the generated instance of an issue."""
         return f"Issue(title='{self.title}', labels={self.labels})"
 
 
@@ -22,7 +23,7 @@ class IssueTrackerClient(ABC):
     """
     @abstractmethod
     def create_issue(self, issue: Issue) -> str:
-        """Creates an issue and returns its ID or URL"""
+        """Creates an issue and returns its ID."""
         pass
 
     @abstractmethod
@@ -37,5 +38,5 @@ class IssueTrackerClient(ABC):
 
     @abstractmethod
     def close_issue(self, issue_id: str) -> None:
-        """Closes an issue."""
+        """Closes an issue and removes it from memory."""
         pass
