@@ -45,6 +45,7 @@ class MockIssueTrackerClient(IssueTrackerClient):
             raise ValueError(f"Issue '{issue_id}' not found.")
         del self.issues[issue_id]
 
+
 class TestIssueTrackerClient(unittest.TestCase):
     """A class for testing the IssueTrackerClient using a mock implemntation that
     stores issues in memory.
