@@ -14,7 +14,7 @@ class Issue:
 
     def __repr__(self):
         """Returns the generated instance of an issue."""
-        return f"Issue(title="{self.title}", labels={self.labels})"
+        return f"Issue(title='{self.title}', labels={self.labels})"
 
 
 class IssueTrackerClient(ABC):
