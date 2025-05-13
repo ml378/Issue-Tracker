@@ -5,6 +5,7 @@ from src.issue_tracker.issue_tracker_interface import Issue, IssueTrackerClient
 
 class MockIssueTrackerClient(IssueTrackerClient):
     """A mock implementation for testing the IssueTrackerClient interface.
+
     It stores issues in a dictionary and simulates create, read, update,
     and delete (close) operations.
     """
