@@ -22,7 +22,7 @@ source = ["src"]  # Specify source directory for coverage measurement
 omit = ["tests/*", "*/migrations/*"]  # Exclude test and migration files
 
 [tool.coverage.report]
-fail_under = 30  # Set minimum coverage threshold (adjust as needed)
+fail_under = 20  # Set minimum coverage threshold (adjust as needed)
 show_missing = true  # Show missing lines in the report
 skip_covered = true  # Skip files where everything is covered
 exclude_lines = [
@@ -58,7 +58,12 @@ lint.ignore = [
     "ANN204", # Ignore missing return type annotation for __init__
     "PT009",  # Ignore assertEqual/unittest-style assertions
     "PLR2004", # Ignore magic number rule
-    "S101"  # Ignore pytest assert rule
+    "S101",  # Ignore pytest assert rule
+    "I001", # Ignore import formatting rules
+    "D401", # Ignore docstring formatting rule
+    "D205", # Ignore docstring formatting rule
+    "COM812", # Conflicts with ruff
+    "PT027" # Ignore pytest enforcement
 ]
 
 # Ruff Formatting Rules

@@ -1,47 +1,65 @@
-    # Python Project with CI/CD Pipeline (CircleCI)
+# Sample Interface for an Issue Tracker Client
 
-    ***Overview***
+This project includes a sample interface for building an issue tracker client using python.
 
-    This repository contains a Python project with automated unit tests, integration tests, and test coverage reports powered by CircleCI.
+## Features
+- A generic issue model in class 'Issue'
+- An abstract base class 'IssueTrackerClient'
+- A mock implementation for testing 'MockIssueTrackerClient'
+- Unit tests validating the interface contract
 
-    ***Features***
+## Use Cases
+- Build interchangeable clients for services like GitHub, GitLab, Trello, or Jira
+- Plug issue tracking logic into apps using dependency injection
+- Write reliable, backend-agnostic tests using the mock client
 
-    1. Automated unit tests with pytest
+## Project Structure
+- issue_tracker_interface.py      # Abstract base class and data model
+- test_issue_tracker_interface.py # Unit tests using unittest
 
-    2. Test coverage report generated and browsable from CircleCI UI
+## Sample Usage
+    # Dependency-injected client
+    tracker = MockIssueTrackerClient()
 
-    3. CI/CD pipeline using CircleCI
+    # Create a new issue
+    issue = Issue(
+        title="Login button not working",
+        description="Clicking the login button does nothing on Firefox.",
+        labels=["bug", "frontend"]
+    )
+    issue_id = tracker.create_issue(issue)
 
-    4. Pre-commit checks with mypy and ruff
+    # Retrieve and print the issue
+    retrieved = tracker.get_issue(issue_id)
+    print("Retrieved:", retrieved)
 
-    5. Modern dependency management using uv
+    # Update the issue
+    tracker.update_issue(issue_id, {
+        "title": "Login fails on Firefox 117+",
+        "description": "Button click does not trigger login on latest version."
+    })
 
-    6. Static analysis and formatting checks
+    # Close the issue
+    tracker.close_issue(issue_id)
 
-    7. GitHub Actions for continuous integratio
+# Prerequisite
+- Python 3.8 or higher
+- UV for Python dependency management
 
-
-    ***Prerequisites***
-
-    1. Python 3.8 or higher
-
-    2. UV for Python dependency management
-
-    ***Setup & Installation***
-
-    Clone the repository:
+# Setup & Installation
+Clone the repository:
     ```sh
-    git clone https://github.com/ml378/Python_Template.git
-    cd Python_Template
+    git clone https://github.com/ml378/Issue-Tracker.git
+    cd Issue_Tracker
     ```
-    Install dependencies:
+Install dependencies:
     ```sh
     python -m venv venv
     source venv/bin/activate
     pip install uv
     uv pip install -r requirements.txt
     ```
-    Run tests:
+Run tests:
     ```sh
     pytest --cov=src --cov-report=html
     ```
@@ -55,69 +73,3 @@
     ```sh open htmlcov/index.html  # macOS
     xdg-open htmlcov/index.html  # Linux
     ```
-
-    ***CI/CD Pipeline (CircleCI)***
-
-    ****How it Works****
-
-    Push to GitHub → CircleCI triggers the pipeline➡️ Runs:
-
-    1. Unit tests (pytest)
-
-    2. Coverage report (pytest-cov)
-
-    3. Linting (ruff)
-
-    Test results are visible in the CircleCI "Tests" tab➡️ Coverage reports are stored as "Artifacts", browsable in CircleCI UI.
-
-    ***View Test Coverage in CircleCI***
-
-    1️⃣ Go to CircleCI Dashboard2️⃣ Open the latest Job Run3️⃣ Navigate to Artifacts4️⃣ Click on test-coverage/index.html to browse the report
-
-
-
-    ***Pull Requests***
-
-    1. Use the pull request template from .github/pull_request_template/
-
-    2. Provide a clear summary of the PR.
-
-    3. Explain the motivation behind the changes.
-
-    4. Describe any testing performed to ensure correctness.
-
-
-
-    ***Tech Stack***
-
-    Python 3.12
-
-    Pytest
-
-    CircleCI
-
-    Coverage.py
-
-    Ruff (Linting)
-
-    Mypy (Type Checking)
-
-    UV (Dependency Management)
-
-    ***License***
-
-    This project is licensed under the MIT License.
-
-    **Links from Circleci Tests**
-
-    https://app.circleci.com/pipelines/circleci/PMKrmVKcMeLYLN4ZAWvPSF/MixxMSzUixT5Ap1GdSpFR8/17/workflows/50d909cf-6753-407d-b258-e848e0d91251/jobs/17
-
-    # Test Coverage Report
-
-    ## Running Tests with Coverage
-    To measure test coverage and generate a browsable report, run:
-
-    ```sh
-    pytest --cov=src --cov-report=html
-    ```
-

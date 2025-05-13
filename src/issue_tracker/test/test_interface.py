@@ -48,32 +48,37 @@ class MockIssueTrackerClient(IssueTrackerClient):
         del self.issues[issue_id]
 
 
-class TestIntegration(unittest.TestCase):
-    """Integration test simulating full lifecycle of an issue using the mock client."""
+class TestIssueTrackerClient(unittest.TestCase):
+    """A class for testing the IssueTrackerClient using a mock implemntation that
+    stores issues in memory.
+    """
 
     def setUp(self):
-        """Creates an instance of the mock issue tracker client."""
+        """Sets up a sample issue using the mock client."""
         self.client = MockIssueTrackerClient()
+        self.issue = Issue(title="Bug", description="Something broke", labels=["bug"])
 
-    def test_issue(self):
-        """Verifies the correct functionality of issue creation, retrieval from
-        memory, issue updates, and closing.
-        """
-        # Create
-        issue = Issue("Integration test", "Testing full flow", labels=["test"])
-        issue_id = self.client.create_issue(issue)
-        self.assertIsNotNone(issue_id)
+    def test_create_and_get_issue(self):
+        """Tests the creation of an issue and retrieval of its ID."""
+        issue_id = self.client.create_issue(self.issue)
+        fetched = self.client.get_issue(issue_id)
+        self.assertIsNotNone(fetched)
+        self.assertEqual(fetched.title, "Bug")
 
-        # Retrieve
-        retrieved = self.client.get_issue(issue_id)
-        self.assertEqual(retrieved.title, "Integration test")
-
-        # Update
-        self.client.update_issue(issue_id, {"title": "Updated title"})
+    def test_update_issue(self):
+        """Tests the updating of a title and description of an issue."""
+        issue_id = self.client.create_issue(self.issue)
+        self.client.update_issue(issue_id, {"title": "Updated Bug", "description": "New description"})
         updated = self.client.get_issue(issue_id)
-        self.assertEqual(updated.title, "Updated title")
+        self.assertEqual(updated.title, "Updated Bug")
+        self.assertEqual(updated.description, "New description")
 
-        # Close
+    def test_close_issue(self):
+        """Verifies that closing an issue removes it from memory."""
+        issue_id = self.client.create_issue(self.issue)
         self.client.close_issue(issue_id)
-        with self.assertRaises(ValueError):
-            self.client.get_issue(issue_id)
+        self.assertIsNone(self.client.get_issue(issue_id))
+
+
+if __name__ == "__main__":
+    unittest.main()
