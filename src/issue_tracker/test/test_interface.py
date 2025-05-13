@@ -12,7 +12,7 @@ class MockIssueTrackerClient(IssueTrackerClient):
 
     def __init__(self):
         """Initializes the mock IssueTrackerClient."""
-        self.issues = {}
+        self.issues: dict[str, Issue] = {}
         self.counter = 1
 
     def create_issue(self, issue: Issue) -> str:
