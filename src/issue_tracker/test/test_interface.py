@@ -22,9 +22,12 @@ class MockIssueTrackerClient(IssueTrackerClient):
         self.counter += 1
         return issue_id
 
-    def get_issue(self, issue_id: str) -> Issue | None:
+    def get_issue(self, issue_id: str) -> Issue:
         """Simulates returning a sample issue's ID."""
-        return self.issues.get(issue_id)
+        issue = self.issues.get(issue_id)
+        if issue is None:
+            raise ValueError(f"Issue {issue_id} not found.")
+        return issue
 
     def update_issue(self, issue_id: str, updates: dict[str, str]) -> None:
         """Simulates updating an issue's title or description."""
