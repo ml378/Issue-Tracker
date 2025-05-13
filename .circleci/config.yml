@@ -29,13 +29,20 @@ jobs:
           command: |
             . .venv/bin/activate
             pytest --junitxml=test-results/results.xml --cov=src --cov-report=xml --cov-report=html tests
+
       - run:
           name: Run linters
           command: |
             . .venv/bin/activate
             python -m ruff check . 
             python -m ruff format --check .
-          
+
+      - run:
+          name: Auto Format
+          command: |
+            . .venv/bin/activate
+            python -m ruff format .
+
       - run:
           name: Static analysis
           command: |
