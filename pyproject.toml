@@ -61,7 +61,8 @@ lint.ignore = [
     "S101",  # Ignore pytest assert rule
     "I001", # Ignore import formatting rules
     "D401", # Ignore docstring formatting rule
-    "D205" # Ignore docstring formatting rule
+    "D205", # Ignore docstring formatting rule
+    "COM812" # Conflicts with black
 ]
 
 # Ruff Formatting Rules
