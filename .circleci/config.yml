@@ -35,12 +35,6 @@ jobs:
           command: |
             . .venv/bin/activate
             python -m ruff check . 
-            python -m ruff format --check .
-
-      - run:
-          name: Auto Format
-          command: |
-            . .venv/bin/activate
             python -m ruff format .
 
       - run:
