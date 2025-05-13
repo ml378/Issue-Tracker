@@ -1,6 +1,5 @@
 from __future__ import annotations
 import unittest
-from typing import Dict
 from src.issue_tracker.issue_tracker_interface import Issue, IssueTrackerClient
 
 
@@ -26,7 +25,7 @@ class MockIssueTrackerClient(IssueTrackerClient):
         """Simulates returning a sample issue's ID."""
         return self.issues.get(issue_id)
 
-    def update_issue(self, issue_id: str, updates: Dict[str, str]) -> None:
+    def update_issue(self, issue_id: str, updates: dict[str, str]) -> None:
         """Simulates updating an issue's title or description."""
         issue = self.issues.get(issue_id)
         if not issue:
