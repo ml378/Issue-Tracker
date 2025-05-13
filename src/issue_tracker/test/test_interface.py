@@ -34,9 +34,9 @@ class MockIssueTrackerClient(IssueTrackerClient):
         if not issue:
             return
         if 'title' in updates:
-            issue.title = updates['title']
+            issue.title = updates["title"]
         if 'description' in updates:
-            issue.description = updates['description']
+            issue.description = updates["description"]
 
     def close_issue(self, issue_id: str) -> None:
         """Simulates closing an issue by removing it from storage."""
