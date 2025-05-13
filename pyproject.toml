@@ -60,7 +60,8 @@ lint.ignore = [
     "PLR2004", # Ignore magic number rule
     "S101",  # Ignore pytest assert rule
     "I001", # Ignore import formatting rules
-    "D401" # Ignore docstring formatting rule
+    "D401", # Ignore docstring formatting rule
+    "D205" # Ignore docstring formatting rule
 ]
 
 # Ruff Formatting Rules
