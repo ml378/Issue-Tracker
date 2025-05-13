@@ -9,6 +9,7 @@ class MockIssueTrackerClient(IssueTrackerClient):
     It stores issues in a dictionary and simulates create, read, update, 
     and delete (close) operations.
     """
+    
     def __init__(self):
         """Initializes the mock IssueTrackerClient."""
         self.issues = {}
@@ -45,6 +46,7 @@ class TestIssueTrackerClient(unittest.TestCase):
     A class for testing the IssueTrackerClient using a mock implemntation that
     stores issues in memory.
     """
+    
     def setUp(self):
         """Sets up a sample issue using the mock client."""
         self.client = MockIssueTrackerClient()
