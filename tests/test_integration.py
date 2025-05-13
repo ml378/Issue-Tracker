@@ -26,7 +26,8 @@ class MockIssueTrackerClient(IssueTrackerClient):
         """Simulates returning a sample issue's ID."""
         issue = self.issues.get(issue_id)
         if issue is None:
-            raise ValueError(f"Issue {issue_id} not found.")
+            msg = f"Issue {issue_id} not found."
+            raise ValueError(msg)
         return issue
 
     def update_issue(self, issue_id: str, updates: dict[str, str]) -> None:
@@ -42,7 +43,8 @@ class MockIssueTrackerClient(IssueTrackerClient):
     def close_issue(self, issue_id: str) -> None:
         """Simulates closing an issue by removing it from memory."""
         if issue_id not in self.issues:
-            raise ValueError(f"Issue '{issue_id}' not found.")
+            msg = f"Issue {issue_id} not found."
+            raise ValueError(msg)
         del self.issues[issue_id]
 
 
