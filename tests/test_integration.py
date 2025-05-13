@@ -73,5 +73,5 @@ class TestIntegration(unittest.TestCase):
 
         # Close
         self.client.close_issue(issue_id)
-        closed = self.client.get_issue(issue_id)
-        self.assertIsNone(closed)
+        with self.assertRaises(ValueError):
+            self.client.get_issue(issue_id)
