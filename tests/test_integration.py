@@ -40,8 +40,10 @@ class MockIssueTrackerClient(IssueTrackerClient):
             issue.description = updates["description"]
 
     def close_issue(self, issue_id: str) -> None:
-        """Simulates closing an issue by removing it from storage."""
-        self.issues.pop(issue_id, None)
+        """Simulates closing an issue by removing it from memory."""
+        if issue_id not in self.issues:
+            raise ValueError(f"Issue '{issue_id}' not found.")
+        del self.issues[issue_id]
 
 
 class TestIntegration(unittest.TestCase):
