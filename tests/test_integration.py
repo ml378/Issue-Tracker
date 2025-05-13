@@ -52,7 +52,6 @@ class TestIntegration(unittest.TestCase):
         """Verifies the correct functionality of issue creation, retrieval from
         memory, issue updates, and closing.
         """
-
         # Create
         issue = Issue("Integration test", "Testing full flow", labels=["test"])
         issue_id = self.client.create_issue(issue)
