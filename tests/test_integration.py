@@ -1,15 +1,17 @@
+from __future__ import annotations
+
 import unittest
 from typing import Dict
+
 from src.issue_tracker.issue_tracker_interface import Issue, IssueTrackerClient
 
 
 class MockIssueTrackerClient(IssueTrackerClient):
-    """
-    A mock implementation for testing the IssueTrackerClient interface.
+    """A mock implementation for testing the IssueTrackerClient interface.
     It stores issues in a dictionary and simulates create, read, update, 
     and delete (close) operations.
     """
-    
+
     def __init__(self):
         """Initializes the mock IssueTrackerClient."""
         self.issues = {}
@@ -31,10 +33,10 @@ class MockIssueTrackerClient(IssueTrackerClient):
         issue = self.issues.get(issue_id)
         if not issue:
             return
-        if 'title' in updates:
-            issue.title = updates['title']
-        if 'description' in updates:
-            issue.description = updates['description']
+        if "title" in updates:
+            issue.title = updates["title"]
+        if "description" in updates:
+            issue.description = updates["description"]
 
     def close_issue(self, issue_id: str) -> None:
         """Simulates closing an issue by removing it from storage."""
@@ -43,7 +45,7 @@ class MockIssueTrackerClient(IssueTrackerClient):
 
 class TestIntegration(unittest.TestCase):
     """Integration test simulating full lifecycle of an issue using the mock client."""
-    
+
     def setUp(self):
         """Creates an instance of the mock issue tracker client."""
         self.client = MockIssueTrackerClient()
