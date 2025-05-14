@@ -1,6 +1,7 @@
 from __future__ import annotations
 import unittest
-from src.issue_tracker.issue_tracker_interface import Issue, IssueTrackerClient
+from datetime import datetime
+from src.issue_tracker.issue_tracker import Comment, Issue, IssueTrackerClient
 
 
 class MockIssueTrackerClient(IssueTrackerClient):
@@ -72,6 +73,16 @@ class TestIssueTrackerClient(unittest.TestCase):
         updated = self.client.get_issue(issue_id)
         self.assertEqual(updated.title, "Updated Bug")
         self.assertEqual(updated.description, "New description")
+
+    def test_add_comment(self):
+        issue_id = self.client.create_issue(self.issue)
+        comment = Comment(author="Name", message="Working on it.")
+        self.client.add_comment(issue_id, comment)
+        retrieved = self.client.get_issue(issue_id)
+        self.assertEqual(len(retrieved.comments), 1)
+        self.assertEqual(retrieved.comments[0].author, "Name")
+        self.assertEqual(retrieved.comments[0].message, "Working on it.")
+        self.assertIsInstance(retrieved.comments[0].timestamp, datetime)
 
     def test_close_issue(self):
         """Verifies that closing an issue removes it from memory."""
