@@ -41,6 +41,11 @@ class MockIssueTrackerClient(IssueTrackerClient):
         if "description" in updates:
             issue.description = updates["description"]
 
+    def add_comment(self, issue_id: str, comment: Comment) -> None:
+        """Adds a comment to an existing issue."""
+        issue = self.get_issue(issue_id)
+        issue.add_comment(comment)
+
     def close_issue(self, issue_id: str) -> None:
         """Simulates closing an issue by removing it from memory."""
         if issue_id not in self.issues:
