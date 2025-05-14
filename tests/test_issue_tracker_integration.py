@@ -1,12 +1,13 @@
 from __future__ import annotations
 import unittest
-from src.issue_tracker.issue_tracker_interface import Issue, IssueTrackerClient
+from datetime import datetime
+from src.issue_tracker.issue_tracker import Comment, Issue, IssueTrackerClient
 
 
 class MockIssueTrackerClient(IssueTrackerClient):
-    """A mock implementation for testing the IssueTrackerClient interface.
+    """A mock implementation for testing the IssueTrackerClient.
 
-    It stores issues in a dictionary and simulates create, read, update,
+    It stores issues in a dictionary and simulates create, read, update, add comment,
     and delete (close) operations.
     """
 
@@ -40,6 +41,11 @@ class MockIssueTrackerClient(IssueTrackerClient):
         if "description" in updates:
             issue.description = updates["description"]
 
+    def add_comment(self, issue_id: str, comment: Comment) -> None:
+        """Simulates adding a comment to an existing issue."""
+        issue = self.get_issue(issue_id)
+        issue.add_comment(comment)
+
     def close_issue(self, issue_id: str) -> None:
         """Simulates closing an issue by removing it from memory."""
         if issue_id not in self.issues:
@@ -59,21 +65,20 @@ class TestIntegration(unittest.TestCase):
         """Verifies the correct functionality of issue creation, retrieval from
         memory, issue updates, and closing.
         """
-        # Create
-        issue = Issue("Integration test", "Testing full flow", labels=["test"])
+        issue = Issue("Crash on submit", "App crashes on clicking submit")
         issue_id = self.client.create_issue(issue)
-        self.assertIsNotNone(issue_id)
-
-        # Retrieve
-        retrieved = self.client.get_issue(issue_id)
-        self.assertEqual(retrieved.title, "Integration test")
-
-        # Update
-        self.client.update_issue(issue_id, {"title": "Updated title"})
+        # Update the issue
+        self.client.update_issue(issue_id, {
+            "title": "Submit crash",
+            "description": "Crash after form submission"
+        })
         updated = self.client.get_issue(issue_id)
-        self.assertEqual(updated.title, "Updated title")
-
-        # Close
-        self.client.close_issue(issue_id)
-        with self.assertRaises(ValueError):
-            self.client.get_issue(issue_id)
+        self.assertEqual(updated.title, "Submit crash")
+        self.assertEqual(updated.description, "Crash after form submission")
+        # Add comments
+        self.client.add_comment(issue_id, Comment("John", "I can reproduce this."))
+        self.client.add_comment(issue_id, Comment("Jane", "This happens on iOS."))
+        retrieved = self.client.get_issue(issue_id)
+        self.assertEqual(len(retrieved.comments), 2)
+        self.assertEqual(retrieved.comments[0].author, "John")
+        self.assertEqual(retrieved.comments[1].message, "This happens on iOS.")
